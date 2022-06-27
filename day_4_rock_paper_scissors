@@ -1,0 +1,61 @@
+from random import randint
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+hand = [rock , paper, scissors]
+valid = False
+while not valid:
+  try:
+    user_hand = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
+    if user_hand in [0,1,2]:
+      valid = True
+    else:
+      raise ValueError
+  # if the users input is not an integer
+  except ValueError:
+    print("\nPlease enter a valid integer!\n")
+print(hand[user_hand])
+print("\nComputer chose:\n")
+comp_hand = randint(0,2)
+print(hand[comp_hand])
+draw = False
+winner = False
+if user_hand == 0 and comp_hand == 2:
+  winner = True
+elif user_hand == 2 and comp_hand == 1:
+  winner = True
+elif user_hand == 1 and comp_hand == 0:
+  winner = True
+elif user_hand == comp_hand:
+  draw = True
+if winner:
+  print("You win.")
+elif draw:
+  print("You draw.")
+else:
+  print("You lose")
+  
