@@ -1,0 +1,93 @@
+import random
+# List containing ASCII art for hangman, with each increment showing a change in the diagram.
+hangman_pics = [
+    '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+========='''
+]
+word_list = ["aardvark", "baboon", "camel"]
+chosen_word = random.choice(word_list)
+guessed_letters = ''
+# Generate a string of '_' with the same length as word to be guessed
+for char in chosen_word:
+    guessed_letters += '_'
+life = 0
+continue_game = True
+while continue_game:
+    # Display the letters the user has guessed and the blanks
+    print(f'Word: {guessed_letters}')
+    guess = input('Guess a letter: ').lower()
+    correct = False
+    # Split the guessed_letters string into a list
+    new = list(guessed_letters)
+    # Iterate through each character in the chosen_word variable
+    # If the location contains the character inputted and has not been previously guessed,
+    # Replace the '_' with the uppercase version of the character.
+    for x in range(0, len(chosen_word)):
+        if guess == chosen_word[x] and guess not in guessed_letters:
+            new[x] = guess.upper()
+            correct = True
+    guessed_letters = ''.join(new)
+    if correct:
+        print('\nCorrect!\n')
+    else:
+        # Output the hangman diagram and increase thier lives.
+        print(hangman_pics[life])
+        life += 1
+    # If the characters guessed is equal to the word, exit game
+    if guessed_letters.lower() == chosen_word:
+        continue_game = False
+        print('\nWell done!\n')
+        continue_game = False
+    # If the user has ran out of lives, exit game
+    elif life == 7:
+        continue_game = False
+        print('\nGame Over!')
+        print(f'\nThe word was: {chosen_word}')
