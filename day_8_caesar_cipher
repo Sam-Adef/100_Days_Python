@@ -1,0 +1,53 @@
+logo = """           
+ ,adPPYba, ,adPPYYba,  ,adPPYba, ,adPPYba, ,adPPYYba, 8b,dPPYba,  
+a8"     "" ""     `Y8 a8P_____88 I8[    "" ""     `Y8 88P'   "Y8  
+8b         ,adPPPPP88 8PP"""""""  `"Y8ba,  ,adPPPPP88 88          
+"8a,   ,aa 88,    ,88 "8b,   ,aa aa    ]8I 88,    ,88 88          
+ `"Ybbd8"' `"8bbdP"Y8  `"Ybbd8"' `"YbbdP"' `"8bbdP"Y8 88   
+            88             88                                 
+           ""             88                                 
+                          88                                 
+ ,adPPYba, 88 8b,dPPYba,  88,dPPYba,   ,adPPYba, 8b,dPPYba,  
+a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8  
+8b         88 88       d8 88       88 8PP""""""" 88          
+"8a,   ,aa 88 88b,   ,a8" 88       88 "8b,   ,aa 88          
+ `"Ybbd8"' 88 88`YbbdP"'  88       88  `"Ybbd8"' 88          
+              88                                             
+              88           
+"""
+
+
+def caesar_cypher(cypher_direction, plain_text, shift_amount):
+    encrypted_message = ""
+    # if the program is to decode a message shift the alhabet backwards
+    if cypher_direction == 'decode':
+        shift_amount *= -1
+    # for each letter in the message convert each number to ASCII equivalent and add/subtaract the shift amount.
+    for letter in plain_text:
+        value = ord(letter)
+        # if the character is a letter change this character by the shift amount
+        if value in range(97, 123):
+            value += shift_amount
+            # if the ASCII value is greater than 122 (outside the alphabet), add the difference from the start of the alphabet.
+            if value > 122:
+                value = abs(122 - value) + 96
+            # if the ASCII value is less than 97 (outside the alphabet), subtract the difference from the end of the alphabet.
+            elif value < 97:
+                value = 123 - abs(97 - value)
+        encrypted_message += chr(value)
+    return encrypted_message
+
+
+print(logo)
+cypher = True
+while cypher:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+    print(f'The encoded message is: {caesar_cypher("encode",text,(shift%26))}'
+          if direction == 'encode' else
+          f'The decoded message is: {caesar_cypher("decode",text,(shift%26))}')
+    user_choice = input("Would you like to go again?(Yes/No): ").lower()
+    if user_choice == 'no':
+        cypher = False
+        print('\nGoodbye\n') 
